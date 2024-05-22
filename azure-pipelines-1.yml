@@ -22,16 +22,9 @@ steps:
     packageType: 'sdk'
     version: '6.x'
 
-
-
 - task: DotNetCoreCLI@2
-  displayName: 'Publish Docker image'
+  displayName: Build
   inputs:
-    command: 'publish'    
-    projects: 'BusinessHubWebAPI/BusinessHubWebAPI.csproj'
-    arguments: '-p ContainerRegistry=$(appName).azurecr.io 
-                -p ContainerImageTag=$(Build.BuildId) 
-                /t:PublishContainer'
-    publishWebProjects: false
-    zipAfterPublish: false
-    nobuild: true            
+    command: 'build'
+    projects: 'BusinessHubWebAPI.sln'    
+    arguments: '--configuration $(buildConfiguration)'          
