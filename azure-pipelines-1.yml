@@ -21,12 +21,7 @@ steps:
   inputs:
     packageType: 'sdk'
     version: '6.x'
-- task: DotNetCoreCLI@2
-  displayName: Build
-  inputs:
-    command: 'build'
-    projects: 'BusinessHubWebAPI.sln'    
-    arguments: '--configuration $(buildConfiguration)'
+
 
 
 - task: DotNetCoreCLI@2
