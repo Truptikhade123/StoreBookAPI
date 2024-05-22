@@ -21,10 +21,9 @@ steps:
   inputs:
     packageType: 'sdk'
     version: '6.x'
-
+    
 - task: DotNetCoreCLI@2
-  displayName: Build
+  displayName: 'dotnet restore'
   inputs:
-    command: 'build'
-    projects: 'BusinessHubWebAPI.sln'    
-    arguments: '--configuration $(buildConfiguration)'          
+    command: restore
+    projects: '**\*.csproj'        
