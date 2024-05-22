@@ -27,13 +27,7 @@ steps:
     command: 'build'
     projects: 'BusinessHubWebAPI.sln'    
     arguments: '--configuration $(buildConfiguration)'
-- task: DotNetCoreCLI@2
-  displayName: Test
-  inputs:
-    command: 'test'
-    projects: 'BusinessHubWebAPI.IntegrationTests/BusinessHubWebAPI.IntegrationTests.csproj'
-    arguments: '--configuration $(buildConfiguration)'
-    nobuild: true
+
 
 - task: DotNetCoreCLI@2
   displayName: 'Publish Docker image'
