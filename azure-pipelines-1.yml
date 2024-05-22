@@ -1,0 +1,48 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  buildConfiguration: 'Release'
+  appName: 'BookStore' 
+steps:
+
+- script: dotnet build --configuration $(buildConfiguration)
+  displayName: 'dotnet build $(buildConfiguration)'
+- task: UseDotNet@2
+  displayName: Use .NET 6 SDK
+  inputs:
+    packageType: 'sdk'
+    version: '6.x'
+- task: DotNetCoreCLI@2
+  displayName: Build
+  inputs:
+    command: 'build'
+    projects: 'BusinessHubWebAPI.sln'    
+    arguments: '--configuration $(buildConfiguration)'
+- task: DotNetCoreCLI@2
+  displayName: Test
+  inputs:
+    command: 'test'
+    projects: 'BusinessHubWebAPI.IntegrationTests/BusinessHubWebAPI.IntegrationTests.csproj'
+    arguments: '--configuration $(buildConfiguration)'
+    nobuild: true
+
+- task: DotNetCoreCLI@2
+  displayName: 'Publish Docker image'
+  inputs:
+    command: 'publish'    
+    projects: 'BusinessHubWebAPI/BusinessHubWebAPI.csproj'
+    arguments: '-p ContainerRegistry=$(appName).azurecr.io 
+                -p ContainerImageTag=$(Build.BuildId) 
+                /t:PublishContainer'
+    publishWebProjects: false
+    zipAfterPublish: false
+    nobuild: true            
