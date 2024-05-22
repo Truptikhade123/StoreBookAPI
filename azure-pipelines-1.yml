@@ -28,8 +28,6 @@ steps:
     feedsToUse: 'select'
     vstsFeed: '6bf02637-a5e0-49e9-9eff-4e123e942b8c'
 - task: DotNetCoreCLI@2
-  displayName: Build
   inputs:
     command: 'build'
-    projects: 'BusinessHubWebAPI.sln'    
-    arguments: '--configuration $(buildConfiguration)'
+    projects: '''**/*.sln'''
