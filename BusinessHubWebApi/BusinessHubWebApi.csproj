@@ -13,8 +13,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" targetFramework="net472" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6"  targetFramework="net472"/>
   </ItemGroup>
 
   <ItemGroup>
