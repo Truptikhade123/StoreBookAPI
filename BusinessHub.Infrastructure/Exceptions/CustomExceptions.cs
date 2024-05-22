@@ -11,7 +11,7 @@ namespace BusinessHub.Infrastructure.Exceptions
     {
         public CustomExceptionCodes ExceptionCode { get; set; }
         public SqlExceptionCodes SqlExceptionCode { get; set; }
-        public string Description { get; set; }
+        public string Description { get; set; } = ""
         public CustomExceptions(CustomExceptionCodes exceptionCode, string description) : base("ExceptionCode: " + exceptionCode + " ExceptionDescription: " + description)
         {
             ExceptionCode = exceptionCode;
