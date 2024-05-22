@@ -17,13 +17,19 @@ steps:
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
 - task: UseDotNet@2
-  displayName: Use .NET 8 SDK
+  displayName: Use .NET 6 SDK
   inputs:
     packageType: 'sdk'
-    version: '8.x'
-    
-- task: DotNetCoreCLI@2
-  displayName: 'dotnet restore'
+    version: '6.x'
+- task: NuGetCommand@2
   inputs:
-    command: restore
-    projects: '**\*.csproj'        
+    command: 'restore'
+    restoreSolution: '**/*.sln'
+    feedsToUse: 'select'
+    vstsFeed: '6bf02637-a5e0-49e9-9eff-4e123e942b8c'
+- task: DotNetCoreCLI@2
+  displayName: Build
+  inputs:
+    command: 'build'
+    projects: 'BusinessHubWebAPI.sln'    
+    arguments: '--configuration $(buildConfiguration)'
