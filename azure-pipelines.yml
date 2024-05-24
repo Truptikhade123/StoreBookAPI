@@ -38,13 +38,6 @@ steps:
     command: 'publish'
     publishWebProjects: false
     projects: '$(solution)'
-- task: AzureRmWebAppDeployment@4
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Free Trial(2d356e68-5d58-4034-89f6-6d5c10857ed3)'
-    appType: 'webApp'
-    WebAppName: 'testbookapi'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
 - task: ArchiveFiles@2
   inputs:
     rootFolderOrFile: '$(Build.BinariesDirectory)'
@@ -56,4 +49,10 @@ steps:
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
-    
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Free Trial(2d356e68-5d58-4034-89f6-6d5c10857ed3)'
+    appType: 'webApp'
+    WebAppName: 'testbookapi'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'    
