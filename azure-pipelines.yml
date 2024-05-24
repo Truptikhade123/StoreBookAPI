@@ -14,46 +14,35 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
-steps:
-
-- task: NuGetToolInstaller@1
-
-- task: NuGetCommand@2
-  inputs:
-    restoreSolution: '$(solution)'
-
-- task: VSBuild@1
-  inputs:
-    solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
-
-- task: VSTest@2
-  inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'publish'
-    publishWebProjects: false
-    projects: '$(solution)'
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(Build.BinariesDirectory)'
-    includeRootFolder: true
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-- task: AzureRmWebAppDeployment@4
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Free Trial(2d356e68-5d58-4034-89f6-6d5c10857ed3)'
-    appType: 'webApp'
-    WebAppName: 'testbookapi'
-    package: '$(Pipeline.Workspace)/drop/$(Build.BuildId)/*.zip'
-    # /packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'   
+stages:
+- stage: build
+  jobs:
+    - job: build
+      steps:
+      - script: dotnet build
+        displayName: 'dotnet build'
+      
+      - script: dotnet publish -o $(build.artifactStagingDirectory)
+        displayName: 'publish artifacts'
+      
+      - task: PublishPipelineArtifact@1
+        inputs:
+          targetPath: $(build.artifactStagingDirectory)
+          artifact: 'drop'
+          publishLocation: 'pipeline'
+- stage: deploy_app
+  jobs:
+    - job: deploy
+      steps:
+        - task: DownloadPipelineArtifact@2
+          inputs:
+            buildType: 'current'
+            artifactName: 'drop'
+            targetPath: '$(Pipeline.Workspace)/drop'
+        - task: AzureWebApp@1
+          inputs:
+            azureSubscription: 'Free Trial(2d356e68-5d58-4034-89f6-6d5c10857ed3)'
+            appType: 'webApp'
+            appName: 'testbookapi'
+            package: '$(Pipeline.Workspace)/drop'
+            runtimeStack: 'DOTNETCORE|6.0'
