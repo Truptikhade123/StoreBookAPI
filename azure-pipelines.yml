@@ -43,11 +43,11 @@ steps:
     rootFolderOrFile: '$(Build.BinariesDirectory)'
     includeRootFolder: true
     archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/(Build.BuildId).zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
     replaceExistingArchive: true
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/(Build.BuildId).zip'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
 - task: AzureRmWebAppDeployment@4
   inputs:
@@ -55,4 +55,4 @@ steps:
     azureSubscription: 'Free Trial(2d356e68-5d58-4034-89f6-6d5c10857ed3)'
     appType: 'webApp'
     WebAppName: 'testbookapi'
-    package: '$(Pipeline.Workspace)/**/$(Build.BuildId).zip'    
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'    
