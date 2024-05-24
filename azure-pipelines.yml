@@ -47,7 +47,7 @@ steps:
     replaceExistingArchive: true
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
     ArtifactName: 'drop'
 - task: AzureRmWebAppDeployment@4
   inputs:
@@ -55,4 +55,4 @@ steps:
     azureSubscription: 'Free Trial(2d356e68-5d58-4034-89f6-6d5c10857ed3)'
     appType: 'webApp'
     WebAppName: 'testbookapi'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'    
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/$(Build.BuildId).zip'    
