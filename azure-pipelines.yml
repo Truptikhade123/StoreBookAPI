@@ -55,4 +55,4 @@ steps:
     azureSubscription: 'Free Trial(2d356e68-5d58-4034-89f6-6d5c10857ed3)'
     appType: 'webApp'
     WebAppName: 'testbookapi'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/drop/$(Build.BuildId).zip'    
+    package: '$(Pipeline.Workspace)/**/$(Build.BuildId).zip'    
