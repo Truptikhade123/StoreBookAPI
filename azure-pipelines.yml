@@ -50,5 +50,5 @@ steps:
      buildType: 'current'
      downloadType: 'single'
      downloadPath: '$(System.ArtifactsDirectory)'
-     artifactName: 'drop'     
+     artifactName: 'testbookapi'     
      
