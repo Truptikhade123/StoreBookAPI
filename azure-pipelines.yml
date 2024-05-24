@@ -45,10 +45,5 @@ steps:
     appType: 'webApp'
     WebAppName: 'testbookapi'
     packageForLinux: '$(System.ArtifactsDirectory)/drop/*.zip'
-- task: DownloadBuildArtifacts@1
-  inputs:
-     buildType: 'current'
-     downloadType: 'single'
-     downloadPath: '$(System.ArtifactsDirectory)'
-     artifactName: 'testbookapi'     
+     
      
