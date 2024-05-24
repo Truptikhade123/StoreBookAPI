@@ -19,6 +19,11 @@ stages:
   jobs:
     - job: build
       steps:
+      - task: NuGetToolInstaller@1
+
+      - task: NuGetCommand@2
+        inputs:
+          restoreSolution: '$(solution)'
       - script: dotnet build
         displayName: 'dotnet build'
       
