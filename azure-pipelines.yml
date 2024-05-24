@@ -55,4 +55,5 @@ steps:
     azureSubscription: 'Free Trial(2d356e68-5d58-4034-89f6-6d5c10857ed3)'
     appType: 'webApp'
     WebAppName: 'testbookapi'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'   
+    PublishProfilePath: '$(System.DefaultWorkingDirectory)\**\MyPub.pubxml'
+    # /packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'   
