@@ -39,6 +39,13 @@ stages:
   jobs:
     - job: deploy
       steps:
+        - task: ArchiveFiles@2
+          inputs:
+             rootFolderOrFile: '$(Build.BinariesDirectory)'
+             includeRootFolder: true
+             archiveType: 'zip'
+             archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+             replaceExistingArchive: true
         - task: DownloadPipelineArtifact@2
           inputs:
             buildType: 'current'
