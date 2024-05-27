@@ -35,17 +35,6 @@ stages:
           targetPath: $(build.artifactStagingDirectory)
           artifact: 'drop'
           publishLocation: 'pipeline'
-      - task: DotNetCoreCLI@2
-        displayName: Publish Docker image
-        inputs:
-          command: 'publish'    
-          projects: 'BusinessHubWebApi/BusinessHubWebApi.csproj'
-          arguments: '-p ContainerRegistry=testbookapi.azurecr.io 
-                -p ContainerImageTag=$(Build.BuildId) 
-                /t:PublishContainer'
-          publishWebProjects: false
-          zipAfterPublish: false
-          nobuild: true    
 - stage: deploy_app
   jobs:
     - job: deploy
