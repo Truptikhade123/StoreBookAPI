@@ -40,7 +40,7 @@ stages:
         inputs:
           command: 'publish'    
           projects: 'BusinessHubWebApi/BusinessHubWebApi.csproj'
-          arguments: '-p ContainerRegistry=$(appName).azurecr.io 
+          arguments: '-p ContainerRegistry=testbookapi.azurecr.io 
                 -p ContainerImageTag=$(Build.BuildId) 
                 /t:PublishContainer'
           publishWebProjects: false
