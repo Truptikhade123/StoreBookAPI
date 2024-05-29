@@ -35,6 +35,9 @@ stages:
           targetPath: $(build.artifactStagingDirectory)
           artifact: 'drop'
           publishLocation: 'pipeline'
+- stage: Test_app
+  jobs:
+    - job: test          
 - stage: deploy_app
   jobs:
     - job: deploy
